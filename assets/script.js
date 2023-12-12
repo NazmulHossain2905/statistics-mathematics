@@ -41,6 +41,13 @@ form.addEventListener("submit", function (event) {
   // সর্বোচ্চ মান (L)
   const maxValue = Math.max(...numbersArr);
 
+  if (maxValue > 10_000) {
+    alert(
+      `আপনান একটি মান ১০,০০০ হাজার এর উপরে আছে।\n প্রতিটি মান অবশ্যই ১০,০০০ এর মধ্যে হতে হবে।`
+    );
+    return;
+  }
+
   // সর্বনিম্ন মান (S)
   const minValue = Math.min(...numbersArr);
 
@@ -147,8 +154,6 @@ function displayTable(minValue, classNumber, numbersArr, classInterval) {
   }
 
   let num = minValue;
-
-  console.log({ minValue, num });
 
   tBody.innerHTML = "";
   let totalSum = 0;
