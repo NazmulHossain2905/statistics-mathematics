@@ -139,7 +139,17 @@ function findClassInterval(totalNumbers, range) {
 function displayTable(minValue, classNumber, numbersArr, classInterval) {
   const tBody = document.querySelector("tBody");
 
+  let minValueStr = minValue.toString();
+  if (!(minValueStr.endsWith("0") || minValueStr.endsWith("5"))) {
+    while (!(minValue % 5 === 0)) {
+      minValue--;
+    }
+  }
+
   let num = minValue;
+
+  console.log({ minValue, num });
+
   tBody.innerHTML = "";
   let totalSum = 0;
   Array(classNumber || 0)
