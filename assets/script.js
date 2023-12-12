@@ -30,7 +30,10 @@ form.addEventListener("submit", function (event) {
 
   // Remove spaces after comma (,)
   const removeSpaces = numbers.trim().split(" ").join("");
-  const numbersArr = removeSpaces.split(",").map((num) => parseInt(num));
+  const numbersArr = removeSpaces
+    .split(",")
+    .filter((num) => !isNaN(parseInt(num)))
+    .map((n) => parseInt(n));
 
   // মোট উপাত্তের সংখ্যা (N)
   const totalNumbers = numbersArr.length;
@@ -79,7 +82,7 @@ form.addEventListener("submit", function (event) {
   CIResult.innerText = ciResult;
 
   classNumberEl.innerText =
-    maxValue % 5 === 0 ? `(${ciResult} + 1)` : Math.ceil(ciResult);
+    maxValue % 5 === 0 ? `(${Math.ceil(ciResult)} + 1)` : Math.ceil(ciResult);
 
   if (maxValue % 5 === 0) {
     incrementClassNumber.innerText = `= ${classNumber}`;
@@ -88,7 +91,7 @@ form.addEventListener("submit", function (event) {
   }
 
   // Table
-  displayTable(minValue, classNumber, numbersArr);
+  displayTable(minValue, classNumber, numbersArr, classInterval);
 
   processing.style.display = "block";
 
@@ -133,19 +136,21 @@ function findClassInterval(totalNumbers, range) {
   }
 }
 
-function displayTable(minValue, classNumber, numbersArr) {
+function displayTable(minValue, classNumber, numbersArr, classInterval) {
   const tBody = document.querySelector("tBody");
 
   let num = minValue;
   tBody.innerHTML = "";
   let totalSum = 0;
-  Array(classNumber)
+  Array(classNumber || 0)
     .fill(0)
     .forEach((_, i) => {
-      const total = numbersArr.filter((n) => n >= num && n < num + 5).length;
+      const total = numbersArr.filter(
+        (n) => n >= num && n < num + classInterval
+      ).length;
       totalSum += total;
       const temp = `<tr>
-      <td>${num} - ${(num += 5)}</td>
+      <td>${num} - ${(num += classInterval)}</td>
       <td>${"|".repeat(total)}</td>
       <td>${total}</td>
     </tr>`;
