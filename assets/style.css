@@ -44,6 +44,21 @@ textarea {
   font-size: 1rem;
 }
 
+select {
+  width: 100%;
+  padding: 0.4rem;
+  border-radius: 2rem;
+  margin-top: 1rem;
+  padding-left: 1.2rem;
+  font-size: 1.2rem;
+  border: 1px solid dodgerblue;
+  outline: none;
+}
+
+select:focus {
+  outline: 2px solid dodgerblue;
+}
+
 textarea:focus {
   outline: 3px solid #1e8fff90;
 }

@@ -27,6 +27,7 @@ form.addEventListener("submit", function (event) {
   event.preventDefault();
 
   const numbers = event.target["number"].value;
+  const method = event.target["method"].value;
 
   // Remove spaces after comma (,)
   const removeSpaces = numbers.trim().split(" ").join("");
@@ -98,7 +99,7 @@ form.addEventListener("submit", function (event) {
   }
 
   // Table
-  displayTable(minValue, classNumber, numbersArr, classInterval);
+  displayTable(minValue, classNumber, numbersArr, classInterval, method);
 
   processing.style.display = "block";
 
@@ -143,7 +144,13 @@ function findClassInterval(totalNumbers, range) {
   }
 }
 
-function displayTable(minValue, classNumber, numbersArr, classInterval) {
+function displayTable(
+  minValue,
+  classNumber,
+  numbersArr,
+  classInterval,
+  method
+) {
   const tBody = document.querySelector("tBody");
 
   let minValueStr = minValue.toString();
@@ -157,21 +164,41 @@ function displayTable(minValue, classNumber, numbersArr, classInterval) {
 
   tBody.innerHTML = "";
   let totalSum = 0;
-  Array(classNumber || 0)
-    .fill(0)
-    .forEach((_, i) => {
-      const total = numbersArr.filter(
-        (n) => n >= num && n < num + classInterval
-      ).length;
-      totalSum += total;
-      const temp = `<tr>
-      <td>${num} - ${(num += classInterval)}</td>
+
+  if (method === "included") {
+    Array(classNumber || 0)
+      .fill(0)
+      .forEach((_, i) => {
+        const total = numbersArr.filter(
+          (n) => n >= num && n <= num + (classInterval - 1)
+        ).length;
+        totalSum += total;
+        const temp = `<tr>
+      <td>${num} - ${num + (classInterval - 1)}</td>
       <td>${"|".repeat(total)}</td>
       <td>${total}</td>
     </tr>`;
 
-      tBody.innerHTML += temp;
-    });
+        tBody.innerHTML += temp;
+        num += classInterval;
+      });
+  } else {
+    Array(classNumber || 0)
+      .fill(0)
+      .forEach((_, i) => {
+        const total = numbersArr.filter(
+          (n) => n >= num && n < num + classInterval
+        ).length;
+        totalSum += total;
+        const temp = `<tr>
+          <td>${num} - ${(num += classInterval)}</td>
+          <td>${"|".repeat(total)}</td>
+          <td>${total}</td>
+        </tr>`;
+
+        tBody.innerHTML += temp;
+      });
+  }
 
   document.getElementById("totalSumResult").innerText = totalSum;
 }
