@@ -9,13 +9,14 @@
     <script src="./assets/script.js" defer></script>
   </head>
   <body>
+    <h1 class="primary-heading">পরিসংখ্যান</h1>
     <form class="form" id="form">
       <label for="number">উপাত্ত সংখ্যাগুলো লিখুন:</label>
       <textarea
         name="number"
         id="number"
         cols="30"
-        rows="10"
+        rows="6"
         placeholder="কমা (,) দিয়ে দিয়ে লিখুন। উদাহ: 100,110,105,122..."
         required
       >
@@ -24,102 +25,103 @@
       <input type="submit" value="সমাধান দেখুন" />
     </form>
 
-    <div class="solution" id="solution">
-      <p class="question">
-        <b>Q:</b> নিচের তথ্যাদি হতে বহির্ভূত পদ্ধতিতে গণসংখ্যা সারণি প্রস্তুত
-        কর।
-      </p>
-      <div class="display-numbers">
-        100, 110, 120, 130, 105, 103, 102, 108, 106, 105, 104, 102, 112, 116,
-        118, 122, 130, 125, 127, 119, 124, 125, 126, 113, 112, 118, 121, 127,
-        115, 109, 102, 104
-      </div>
+    <h2 class="processing">Precessing...</h2>
 
-      <p><b>Solution:-</b></p>
-      <pre>
-দেওয়া আছে,
-    মোট উপাত্তের সংখ্যা (N) = <b id="totalNumbers">32</b>
-    সর্বোচ্চ মান (L) = <b id="largestValue">130</b>
-    সর্বনিম্ন মান (S) = <b id="smallestValue">100</b>
+    <div id="displaySolution" class="display-solution">
+      <div class="solution" id="solution">
+        <p class="question">
+          <b>Q:</b> নিচের তথ্যাদি হতে বহির্ভূত পদ্ধতিতে গণসংখ্যা সারণি প্রস্তুত
+          কর।
 
-    অতএব, পরিসর (R) = (L-S)
-                   = 130-100
-                   = 30
-<div style="display:flex; flex-direction: column">
-  <div class="divide-container">
-    শ্রেণী ব্যবধান (C.I) =
-    <div class="divide-wrapper">
-      <p class="top">R</p>
-      <div class="divider"></div>
-      <p class="bottom">1 + 3.322logN</p>
-    </div>
-  </div>
-  <div class="divide-container">
-                    =
-  <div class="divide-wrapper">
-    <p class="top">30</p>
-    <div class="divider"></div>
-    <p class="bottom">1 + 3.322log32</p>
-   </div>
-  </div>
-  <div class="divide-container">
-                    =
-  <div class="divide-wrapper">
-    <p class="top">30</p>
-    <div class="divider"></div>
-    <p class="bottom">1 + 3.322 * 1.51</p>
-   </div>
-  </div>
-  <div class="divide-container">
-                    =
-  <div class="divide-wrapper">
-    <p class="top">30</p>
-    <div class="divider"></div>
-    <p class="bottom">1 + 5.02</p>
-   </div>
-  </div>
-  <div class="divide-container">
-                    =
-  <div class="divide-wrapper">
-    <p class="top">30</p>
-    <div class="divider"></div>
-    <p class="bottom">6.02</p>
-   </div>
-  </div>
-  <div>
-                    =<b> 4.98</b>
-  </div>
-</div>
-    ধরি, শ্রেণী ব্যবধান (C.I) = 5
+          <button class="close" id="closeBtn">Go Back</button>
+        </p>
+        <div class="display-numbers" id="displayNumbers">...</div>
 
-    <div style="display:flex; flex-direction: column">
+        <p><b class="solution-text">Solution:-</b></p>
+        <pre>
+
+  দেওয়া আছে,
+      মোট উপাত্তের সংখ্যা (N) = <b id="totalNumbers">0</b>
+      সর্বোচ্চ মান (L) = <b id="largestValue">0</b>
+      সর্বনিম্ন মান (S) = <b id="smallestValue">0</b>
+
+      অতএব, পরিসর (R) = (L - S)
+                     = <span id="LV">0</span> - <span id="SV">0</span>
+                     = <b id="range">0</b>
+  <div style="display:flex; flex-direction: column">
     <div class="divide-container">
-    অতএব, শ্রেণী সংখ্যা =
+      শ্রেণী ব্যবধান (C.I) =
       <div class="divide-wrapper">
-        <p class="top">পরিসর (R)</p>
+        <p class="top">R</p>
         <div class="divider"></div>
-        <p class="bottom">শ্রেণী ব্যবধান (C.I)</p>
+        <p class="bottom">1 + 3.322logN</p>
       </div>
     </div>
     <div class="divide-container">
-                   =
+                     =
     <div class="divide-wrapper">
-      <p class="top">30</p>
+      <p class="top top-range">30</p>
       <div class="divider"></div>
-      <p class="bottom">5</p>
-     </div>
+      <p class="bottom">1 + 3.322log<span id="N">32</span></p>
+    </div>
+    </div>
+    <div class="divide-container">
+                     =
+    <div class="divide-wrapper">
+      <p class="top top-range">30</p>
+      <div class="divider"></div>
+      <p class="bottom">1 + 3.322 x <span id="logValue">1.51</span></p>
+    </div>
+    </div>
+    <div class="divide-container">
+                     =
+    <div class="divide-wrapper">
+      <p class="top top-range">30</p>
+      <div class="divider"></div>
+      <p class="bottom">1 + <span id="logAdd">5.02</span></p>
+    </div>
+    </div>
+    <div class="divide-container">
+                     =
+    <div class="divide-wrapper">
+      <p class="top top-range">30</p>
+      <div class="divider"></div>
+      <p class="bottom" id="logAddBy1">6.02</p>
+    </div>
     </div>
     <div>
-                   =<b> 6</b>
+                     = <b id="logResult">4.98</b>
     </div>
   </div>
-    ধরি, শ্রেণী সংখ্যা = (6 + 1)
-                 = <b>7</b>
-    পদ্ধতি: <b>বহির্ভূত</b> পদ্ধতি
-                             <b>গণসংখ্যা সারণি</b>
-</pre>
+      ধরি, শ্রেণী ব্যবধান (C.I) = <b class="CI">5</b>
 
+    <div style="display:flex; flex-direction: column">
+      <div class="divide-container">
+      অতএব, শ্রেণী সংখ্যা =
+        <div class="divide-wrapper">
+          <p class="top">পরিসর (R)</p>
+          <div class="divider"></div>
+          <p class="bottom">শ্রেণী ব্যবধান (C.I)</p>
+        </div>
+      </div>
+      <div class="divide-container">
+                     =
+      <div class="divide-wrapper">
+        <p class="top" id="R">30</p>
+        <div class="divider"></div>
+        <p class="bottom CI">5</p>
+      </div>
+      </div>
+      <div>
+                     = <b id="CIResult">6</b>
+      </div>
+    </div>
+      ধরি, শ্রেণী সংখ্যা = <span id="classNumber">(6 + 1)</span>
+                   <b id="incrementClassNumber">= 7</b>
+
+      পদ্ধতি: <b>বহির্ভূত</b> পদ্ধতি
       <table border="1px">
+        <caption><b>গণসংখ্যা সারণি</b></caption>
         <thead>
           <tr>
             <th>শ্রেণী ব্যবধান (C.I)</th>
@@ -128,30 +130,18 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>100 - 105</td>
-            <td>|||| |||</td>
-            <td>7</td>
-          </tr>
-          <tr>
-            <td>105 - 110</td>
-            <td>|||| |||</td>
-            <td>7</td>
-          </tr>
-          <tr>
-            <td>110 - 115</td>
-            <td>|||| |||</td>
-            <td>7</td>
-          </tr>
+        
         </tbody>
         <tfoot>
           <tr>
             <td></td>
             <td></td>
-            <td>N = 32</td>
+            <td>N = <b id="totalSumResult">32</b></td>
           </tr>
         </tfoot>
       </table>
+  </pre>
+      </div>
     </div>
   </body>
 </html>

@@ -1,9 +1,32 @@
 const form = document.getElementById("form");
 
+const displayNumbers = document.getElementById("displayNumbers");
+const totalNumbersEl = document.getElementById("totalNumbers");
+const largestValueEl = document.getElementById("largestValue");
+const smallestValueEl = document.getElementById("smallestValue");
+const LV = document.getElementById("LV");
+const SV = document.getElementById("SV");
+const rangeEl = document.getElementById("range");
+const topRanges = document.getElementsByClassName("top-range");
+const N = document.getElementById("N");
+const logValue = document.getElementById("logValue");
+const logAdd = document.getElementById("logAdd");
+const logAddBy1 = document.getElementById("logAddBy1");
+const logResult = document.getElementById("logResult");
+const CI = document.getElementsByClassName("CI");
+const R = document.getElementById("R");
+const CIResult = document.getElementById("CIResult");
+const classNumberEl = document.getElementById("classNumber");
+const incrementClassNumber = document.getElementById("incrementClassNumber");
+
+const closeBtn = document.getElementById("closeBtn");
+const displaySolution = document.getElementById("displaySolution");
+const processing = document.querySelector(".processing");
+
 form.addEventListener("submit", function (event) {
   event.preventDefault();
 
-  const numbers = event.target["numbers"].value;
+  const numbers = event.target["number"].value;
 
   // Remove spaces after comma (,)
   const removeSpaces = numbers.trim().split(" ").join("");
@@ -23,13 +46,60 @@ form.addEventListener("submit", function (event) {
 
   // শ্রেণি ব্যবধান (C.I)
   const classInterval = findClassInterval(totalNumbers, range);
-  console.log({ classInterval });
 
   // শ্রেণি সংখ্যা
   let classNumber = Math.ceil(range / classInterval);
   if (maxValue % 5 === 0) classNumber += 1;
 
-  console.log({ classNumber });
+  // Display
+  displayNumbers.innerText = numbersArr.join(", ");
+  totalNumbersEl.innerText = totalNumbers;
+  largestValueEl.innerText = maxValue;
+  smallestValueEl.innerText = minValue;
+  LV.innerText = maxValue;
+  SV.innerText = minValue;
+  rangeEl.innerText = maxValue - minValue;
+  [...topRanges].forEach((r) => (r.innerText = range));
+  N.innerText = totalNumbers;
+
+  const log = Number(Math.log10(totalNumbers).toFixed(2));
+  logValue.innerText = log;
+  logAdd.innerText = (3.322 * log).toFixed(2);
+
+  const strugesFormula = Number((1 + 3.322 * log).toFixed(2));
+  logAddBy1.innerText = strugesFormula;
+  const ci = Number((range / strugesFormula).toFixed(2));
+  logResult.innerText = ci;
+  [...CI].forEach((ci) => (ci.innerText = classInterval));
+  R.innerText = range;
+
+  const ciResult = Number.isInteger(range / classInterval)
+    ? range / classInterval
+    : (range / classInterval).toFixed(1);
+  CIResult.innerText = ciResult;
+
+  classNumberEl.innerText =
+    maxValue % 5 === 0 ? `(${ciResult} + 1)` : Math.ceil(ciResult);
+
+  if (maxValue % 5 === 0) {
+    incrementClassNumber.innerText = `= ${classNumber}`;
+  } else {
+    incrementClassNumber.style.display = "none";
+  }
+
+  // Table
+  displayTable(minValue, classNumber, numbersArr);
+
+  processing.style.display = "block";
+
+  setTimeout(() => {
+    processing.style.display = "none";
+    displaySolution.style.display = "block";
+  }, 2000);
+});
+
+closeBtn.addEventListener("click", function (e) {
+  displaySolution.style.display = "none";
 });
 
 function findClassInterval(totalNumbers, range) {
@@ -61,4 +131,27 @@ function findClassInterval(totalNumbers, range) {
     default:
       return 50;
   }
+}
+
+function displayTable(minValue, classNumber, numbersArr) {
+  const tBody = document.querySelector("tBody");
+
+  let num = minValue;
+  tBody.innerHTML = "";
+  let totalSum = 0;
+  Array(classNumber)
+    .fill(0)
+    .forEach((_, i) => {
+      const total = numbersArr.filter((n) => n >= num && n < num + 5).length;
+      totalSum += total;
+      const temp = `<tr>
+      <td>${num} - ${(num += 5)}</td>
+      <td>${"|".repeat(total)}</td>
+      <td>${total}</td>
+    </tr>`;
+
+      tBody.innerHTML += temp;
+    });
+
+  document.getElementById("totalSumResult").innerText = totalSum;
 }

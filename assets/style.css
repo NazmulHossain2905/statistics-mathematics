@@ -8,11 +8,18 @@ body {
   padding: 0 1rem;
 }
 
+.primary-heading {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 3rem;
+  color: dodgerblue;
+}
+
 .form {
   background-color: #f1f1f1;
   padding: 1rem;
-  max-width: 30rem;
-  margin: 5rem auto;
+  max-width: 40rem;
+  margin: 3rem auto;
   border-radius: 1rem;
   box-shadow: 0 0 10px #0005;
 }
@@ -22,6 +29,8 @@ label {
   text-align: center;
   display: block;
   margin-bottom: 0.4rem;
+  font-size: 1.2rem;
+  color: dodgerblue;
 }
 
 textarea {
@@ -32,6 +41,7 @@ textarea {
   outline: none;
   resize: none;
   border-radius: 1rem;
+  font-size: 1rem;
 }
 
 textarea:focus {
@@ -40,6 +50,7 @@ textarea:focus {
 
 input[type="submit"] {
   width: 100%;
+  font-size: 1.1rem;
   margin-top: 1rem;
   border: none;
   outline: none;
@@ -47,7 +58,7 @@ input[type="submit"] {
   color: #fff;
   font-weight: bold;
   padding: 0.3rem;
-  border-radius: 1rem;
+  border-radius: 1.7rem;
   cursor: pointer;
   transition: background-color 0.2s ease-in;
 }
@@ -56,9 +67,95 @@ input[type="submit"]:hover {
   background-color: #0270dd;
 }
 
+.processing {
+  color: dodgerblue;
+  text-align: center;
+  display: none;
+  max-width: fit-content;
+  margin: 0 auto;
+  animation: fadeIn 0.8s linear infinite alternate;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+.display-solution {
+  background-color: #fff;
+  display: none;
+  position: absolute;
+  inset: 0;
+  padding: 1rem;
+  overflow: auto;
+  animation: slide 0.4s linear;
+}
+
+@keyframes slide {
+  from {
+    opacity: 0.6;
+    transform: translateX(10rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0rem);
+  }
+}
+
+.solution {
+  margin-block: 2.4rem 1rem;
+  max-width: 55rem;
+  margin-inline: auto;
+}
+
+.question {
+  font-weight: bold;
+  font-size: 1.8rem;
+}
+
+.close {
+  background-color: black;
+  outline: none;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  position: fixed;
+  right: 1.2rem;
+  top: 0.5rem;
+  transition: 0.2s ease-out;
+  cursor: pointer;
+}
+.close:hover {
+  transform: translateX(-1rem);
+  background-color: crimson;
+}
+
+.display-numbers {
+  font-size: 1.3rem;
+  margin-block: 0.5rem 0.8rem;
+}
+
+.solution-text {
+  font-size: 1.3rem;
+  background-color: dodgerblue;
+  padding: 0.2rem 1rem;
+  display: block;
+  max-width: fit-content;
+  border-radius: 2rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
 .divide-container {
   display: flex;
-  /* background-color: peachpuff; */
   align-items: center;
   gap: 0.5rem;
 }
@@ -82,4 +179,29 @@ input[type="submit"]:hover {
 .bottom {
   padding-inline: 1rem;
   width: 100%;
+}
+
+pre {
+  /* background-color: #eaeaea; */
+  background-color: #f4f4f4;
+  font-size: 1.2rem;
+  padding: 0.3rem;
+  overflow-x: auto;
+  border-radius: 0.2rem;
+}
+
+table {
+  border-collapse: collapse;
+  text-align: center;
+  margin-inline: auto;
+}
+
+tr,
+th,
+td {
+  padding: 0.3rem 0.8rem;
+}
+
+thead {
+  background-color: #b4d6f8;
 }
