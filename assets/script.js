@@ -23,6 +23,14 @@ const closeBtn = document.getElementById("closeBtn");
 const displaySolution = document.getElementById("displaySolution");
 const processing = document.querySelector(".processing");
 
+// Variables Declarations
+let minValue;
+let maxValue;
+let range;
+let classInterval;
+let classNumber;
+let ciResult;
+
 form.addEventListener("submit", function (event) {
   event.preventDefault();
 
@@ -40,7 +48,7 @@ form.addEventListener("submit", function (event) {
   const totalNumbers = numbersArr.length;
 
   // সর্বোচ্চ মান (L)
-  const maxValue = Math.max(...numbersArr);
+  maxValue = Math.max(...numbersArr);
 
   if (maxValue > 10_000) {
     alert(
@@ -50,16 +58,16 @@ form.addEventListener("submit", function (event) {
   }
 
   // সর্বনিম্ন মান (S)
-  const minValue = Math.min(...numbersArr);
+  minValue = Math.min(...numbersArr);
 
   // পরিসর (R)
-  const range = maxValue - minValue;
+  range = maxValue - minValue;
 
   // শ্রেণি ব্যবধান (C.I)
-  const classInterval = findClassInterval(totalNumbers, range);
+  classInterval = findClassInterval(totalNumbers, range);
 
   // শ্রেণি সংখ্যা
-  let classNumber = Math.ceil(range / classInterval);
+  classNumber = Math.ceil(range / classInterval);
   if (maxValue % 5 === 0) classNumber += 1;
 
   // Display
@@ -84,7 +92,7 @@ form.addEventListener("submit", function (event) {
   [...CI].forEach((ci) => (ci.innerText = classInterval));
   R.innerText = range;
 
-  const ciResult = Number.isInteger(range / classInterval)
+  ciResult = Number.isInteger(range / classInterval)
     ? range / classInterval
     : (range / classInterval).toFixed(1);
   CIResult.innerText = ciResult;
@@ -95,11 +103,11 @@ form.addEventListener("submit", function (event) {
   if (maxValue % 5 === 0) {
     incrementClassNumber.innerText = `= ${classNumber}`;
   } else {
-    incrementClassNumber.style.display = "none";
+    incrementClassNumber.innerText = "";
   }
 
   // Table
-  displayTable(minValue, classNumber, numbersArr, classInterval, method);
+  displayTable(numbersArr, method);
 
   processing.style.display = "block";
 
@@ -144,14 +152,9 @@ function findClassInterval(totalNumbers, range) {
   }
 }
 
-function displayTable(
-  minValue,
-  classNumber,
-  numbersArr,
-  classInterval,
-  method
-) {
+function displayTable(numbersArr, method) {
   const tBody = document.querySelector("tBody");
+  const selectedMethod = document.getElementsByClassName("selectedMethod");
 
   let minValueStr = minValue.toString();
   if (!(minValueStr.endsWith("0") || minValueStr.endsWith("5"))) {
@@ -166,22 +169,29 @@ function displayTable(
   let totalSum = 0;
 
   if (method === "included") {
-    Array(classNumber || 0)
-      .fill(0)
-      .forEach((_, i) => {
-        const total = numbersArr.filter(
-          (n) => n >= num && n <= num + (classInterval - 1)
-        ).length;
-        totalSum += total;
-        const temp = `<tr>
-      <td>${num} - ${num + (classInterval - 1)}</td>
-      <td>${"|".repeat(total)}</td>
-      <td>${total}</td>
-    </tr>`;
+    [...selectedMethod].forEach((el) => (el.innerText = "অন্তর্ভূক্ত"));
 
-        tBody.innerHTML += temp;
-        num += classInterval;
-      });
+    while (num <= maxValue) {
+      const total = numbersArr.filter(
+        (n) => n >= num && n <= num + (classInterval - 1)
+      ).length;
+      totalSum += total;
+      const temp = `<tr>
+        <td>${num} - ${num + (classInterval - 1)}</td>
+        <td>${"|".repeat(total)}</td>
+        <td>${total}</td>
+      </tr>`;
+
+      tBody.innerHTML += temp;
+      num += classInterval;
+    }
+    console.log(tBody.children.length, classNumber);
+    if (tBody.children.length > classNumber) {
+      classNumberEl.innerText = `(${Math.ceil(ciResult)} + ${
+        tBody.children.length - Math.ceil(ciResult)
+      })`;
+      incrementClassNumber.innerText = `= ${tBody.children.length}`;
+    }
   } else {
     Array(classNumber || 0)
       .fill(0)
